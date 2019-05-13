@@ -1,0 +1,21 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/vscode_builder', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/vscode_builder']
+- name: 'gcr.io/$PROJECT_ID/vscode_builder'
+  args: ['git', 'clone', '${_VS_CODE_REPO}']
+- name: 'gcr.io/$PROJECT_ID/vscode_builder'
+  args: ['yarn']
+  dir: 'vscode'
+- name: 'gcr.io/$PROJECT_ID/vscode_builder'
+  args: ['yarn', 'run', 'gulp', 'vscode-linux-x64']
+  dir: 'vscode'
+- name: 'gcr.io/$PROJECT_ID/vscode_builder'
+  args: ['tar', 'czvf', 'VSCode-linux-x64.tar.bz2', 'VSCode-linux-x64']
+substitutions:
+  _VS_CODE_REPO: https://github.com/CliffJumper/vscode.git
+artifacts:
+  objects:
+    location: 'gs://vscode-builds/'
+    paths: ['VSCode-linux-x64.tar.bz2']
