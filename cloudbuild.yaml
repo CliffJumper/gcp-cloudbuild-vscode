@@ -13,6 +13,11 @@ steps:
   dir: 'vscode'
 - name: 'gcr.io/$PROJECT_ID/vscode_builder'
   args: ['tar', 'czvf', 'VSCode-linux-x64.tar.bz2', 'VSCode-linux-x64']
+- name: 'gcr.io/$PROJECT_ID/vscode_builder'
+  args: ['yarn', 'run', 'gulp', 'vscode-win32-x64']
+  dir: 'vscode'
+- name: 'gcr.io/$PROJECT_ID/vscode_builder'
+  args: ['tar', 'czvf', 'VSCode-win32-x64.tar.bz2', 'VSCode-win32-x64']
 substitutions:
   _VS_CODE_REPO: https://github.com/CliffJumper/vscode.git
 artifacts:
