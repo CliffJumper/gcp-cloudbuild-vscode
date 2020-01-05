@@ -1,6 +1,6 @@
 FROM debian:stretch
 
-LABEL maintainer="nucular.limzeen@gmail.com"
+LABEL maintainer="nucular.limozeen@gmail.com"
 
 RUN apt-get update; apt-get upgrade
 
